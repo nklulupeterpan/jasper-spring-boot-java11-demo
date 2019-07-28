@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 
 @Component
 public class ReportXlsExporter extends JRXlsxExporter {
+
     @Getter
     @Setter
     private JasperPrint jasperPrint;
@@ -25,7 +26,7 @@ public class ReportXlsExporter extends JRXlsxExporter {
         this.jasperPrint = jasperPrint;
     }
 
-    public void exportToXlsx(String fileName, String sheetName) {
+    public boolean exportToXlsx(String fileName, String sheetName) {
         this.setExporterInput(new SimpleExporterInput(jasperPrint));
         this.setExporterOutput(new SimpleOutputStreamExporterOutput(fileName));
 
@@ -36,8 +37,11 @@ public class ReportXlsExporter extends JRXlsxExporter {
 
         try {
             this.exportReport();
+
+            return true;
         } catch (JRException ex) {
             Logger.getLogger(ReportFiller.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return false;
     }
 }

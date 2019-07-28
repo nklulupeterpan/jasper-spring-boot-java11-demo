@@ -27,7 +27,7 @@ public class ReportPdfExporter extends JRPdfExporter{
         this.jasperPrint = jasperPrint;
     }
 
-    public void exportToPdf(String fileName) {
+    public boolean exportToPdf(String fileName) {
 
         this.setExporterInput(new SimpleExporterInput(jasperPrint));
         this.setExporterOutput(new SimpleOutputStreamExporterOutput(fileName));
@@ -42,9 +42,11 @@ public class ReportPdfExporter extends JRPdfExporter{
         this.setConfiguration(exportConfig);
         try {
             this.exportReport();
+            return true;
         } catch (JRException ex) {
             Logger.getLogger(ReportFiller.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return false;
     }
 
 }

@@ -1,5 +1,7 @@
 package com.luyang.jasper.springapp.demo.model;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.context.annotation.Description;
 
 import javax.validation.constraints.NotBlank;
@@ -12,31 +14,21 @@ public class Fund implements Serializable {
 
     private static final long serialVersionUID = 7526472295622776147L;
 
-    @NotNull @NotBlank private String fundCode;
-    @NotNull @NotBlank private String fundName;
-    @NotNull @NotBlank private String bank;
+    @NotNull
+    @NotBlank
+    @Getter
+    @Setter
+    private String fundCode;
 
-    public String getFundCode() {
-        return fundCode;
-    }
+    @NotNull
+    @NotBlank
+    @Getter
+    @Setter
+    private String fundName;
 
-    public void setFundCode(String fundCode) {
-        this.fundCode = fundCode;
-    }
-
-    public String getFundName() {
-        return fundName;
-    }
-
-    public void setFundName(String fundName) {
-        this.fundName = fundName;
-    }
-
-    public String getBank() {
-        return bank;
-    }
-
-    public void setBank(String bank) {
-        this.bank = bank;
-    }
+    @NotNull
+    @NotBlank
+    @Getter
+    @Setter
+    private String bank;
 }

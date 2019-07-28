@@ -23,8 +23,9 @@ public class ReportResource {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ReportResource.class);
 
-     @Autowired
+    @Autowired
     private ApplicationContext context;
+
     /**
      * Endpoint for generating simple PDF report
      *
@@ -33,19 +34,15 @@ public class ReportResource {
     @GetMapping(value = "/pdf", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> generatePDFReport() {
         LOGGER.info("Generating Fund PDF report.");
-        ReportFiller reportFiller = context.getBean(ReportFiller.class);
-        reportFiller.setReportFileName("fundReport.jrxml");
-        Map<String, Object> parameters = new HashMap<>();
-        parameters.put("title", "Fund Report Example");
-
-        reportFiller.setParameters(parameters);
-        reportFiller.fillReport();
 
         ReportPdfExporter pdfExporter = context.getBean(ReportPdfExporter.class);
-        pdfExporter.setJasperPrint(reportFiller.getJasperPrint());
-        pdfExporter.exportToPdf("fundReport.pdf");
-
-        return new ResponseEntity<>("PDF Report is successfully generated ", HttpStatus.OK);
+        pdfExporter.setJasperPrint(configFilter().getJasperPrint());
+        boolean success = pdfExporter.exportToPdf("fundReport.pdf");
+        if (success) {
+            return new ResponseEntity<>("PDF Report is successfully generated ", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("PDF Report cannot be generated ", HttpStatus.OK);
+        }
     }
 
     /**
@@ -54,6 +51,19 @@ public class ReportResource {
     @GetMapping(value = "/xls", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> generateXLSReport() {
         LOGGER.info("Generating Fund XLS report.");
+
+        ReportXlsExporter xlsExporter = context.getBean(ReportXlsExporter.class);
+        xlsExporter.setJasperPrint( configFilter().getJasperPrint());
+        boolean success = xlsExporter.exportToXlsx("fundReport.xlsx", "Fund Data");
+
+        if (success) {
+            return new ResponseEntity<>("XLS Report is successfully generated ", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("XLS Report cannot be generated ", HttpStatus.OK);
+        }
+    }
+
+    private ReportFiller configFilter() {
         ReportFiller reportFiller = context.getBean(ReportFiller.class);
         reportFiller.setReportFileName("fundReport.jrxml");
         Map<String, Object> parameters = new HashMap<>();
@@ -62,11 +72,7 @@ public class ReportResource {
         reportFiller.setParameters(parameters);
         reportFiller.fillReport();
 
-        ReportXlsExporter xlsExporter = context.getBean(ReportXlsExporter.class);
-        xlsExporter.setJasperPrint(reportFiller.getJasperPrint());
-        xlsExporter.exportToXlsx("fundReport.xlsx", "Fund Data");
-
-        return new ResponseEntity<>("XLS Report is successfully generated ", HttpStatus.OK);
+        return reportFiller;
     }
 
 }
