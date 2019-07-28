@@ -24,17 +24,17 @@
     <detail>
         <band height="47" splitType="Stretch">
             <textField>
-                <reportElement x="0" y="0" width="150" height="20"/>
+                <reportElement x="50" y="0" width="250" height="20"/>
                 <textElement/>
                 <textFieldExpression class="java.lang.String"><![CDATA[$F{FUND_CODE}]]></textFieldExpression>
             </textField>
             <textField>
-                <reportElement x="100" y="0" width="150" height="20"/>
+                <reportElement x="150" y="0" width="250" height="20"/>
                 <textElement/>
                 <textFieldExpression class="java.lang.String"><![CDATA[$F{FUND_NAME}]]></textFieldExpression>
             </textField>
             <textField>
-                <reportElement x="200" y="0" width="150" height="20"/>
+                <reportElement x="250" y="0" width="250" height="20"/>
                 <textElement/>
                 <textFieldExpression class="java.lang.String"><![CDATA[$F{AMOUNT}]]></textFieldExpression>
             </textField>

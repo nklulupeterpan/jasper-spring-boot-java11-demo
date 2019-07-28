@@ -7,11 +7,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.*;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 class ReportXlsExporterTest {
@@ -27,8 +27,9 @@ class ReportXlsExporterTest {
     }
 
     @Test
-    void exportToXlsx_success() {
+    void exportToXlsx_success() throws JRException {
 
+        doNothing().when(toTest).exportReport();
         toTest.setJasperPrint(new JasperPrint());
         boolean success = toTest.exportToXlsx("report file", "sheet name");
         assertTrue(success);
@@ -41,7 +42,6 @@ class ReportXlsExporterTest {
         doThrow(new JRException("Test JR Exception")).when(toTest).exportReport();
 
         boolean success = toTest.exportToXlsx("report file", "sheet name");
-        asserFalse(success);
-
+        assertFalse(success);
     }
 }

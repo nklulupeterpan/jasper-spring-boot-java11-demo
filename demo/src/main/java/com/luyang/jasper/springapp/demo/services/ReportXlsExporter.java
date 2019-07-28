@@ -37,7 +37,6 @@ public class ReportXlsExporter extends JRXlsxExporter {
 
         try {
             this.exportReport();
-
             return true;
         } catch (JRException ex) {
             Logger.getLogger(ReportFiller.class.getName()).log(Level.SEVERE, null, ex);
