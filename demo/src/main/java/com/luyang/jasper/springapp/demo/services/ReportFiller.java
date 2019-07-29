@@ -19,7 +19,6 @@ import net.sf.jasperreports.engine.util.JRSaver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-@Component
 public class ReportFiller {
     @Setter
     @Getter

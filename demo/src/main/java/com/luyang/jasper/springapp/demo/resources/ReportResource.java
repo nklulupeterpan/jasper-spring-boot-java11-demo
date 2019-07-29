@@ -24,7 +24,13 @@ public class ReportResource {
     private static final Logger LOGGER = LoggerFactory.getLogger(ReportResource.class);
 
     @Autowired
-    private ApplicationContext context;
+    private ReportPdfExporter pdfExporter;
+
+    @Autowired
+    private ReportXlsExporter xlsExporter;
+
+    @Autowired
+    private ReportFiller reportFiller;
 
     /**
      * Endpoint for generating simple PDF report
@@ -35,7 +41,7 @@ public class ReportResource {
     public ResponseEntity<String> generatePDFReport() {
         LOGGER.info("Generating Fund PDF report.");
 
-        ReportPdfExporter pdfExporter = context.getBean(ReportPdfExporter.class);
+     //   ReportPdfExporter pdfExporter = context.getBean(ReportPdfExporter.class);
         boolean success =false;
         if(configFilter().getJasperPrint() != null) {
             pdfExporter.setJasperPrint(configFilter().getJasperPrint());
@@ -55,7 +61,6 @@ public class ReportResource {
     public ResponseEntity<String> generateXLSReport() {
         LOGGER.info("Generating Fund XLS report.");
 
-        ReportXlsExporter xlsExporter = context.getBean(ReportXlsExporter.class);
         boolean success =false;
         if(configFilter().getJasperPrint() != null) {
             xlsExporter.setJasperPrint(configFilter().getJasperPrint());
@@ -69,7 +74,6 @@ public class ReportResource {
     }
 
     private ReportFiller configFilter() {
-        ReportFiller reportFiller = context.getBean(ReportFiller.class);
         reportFiller.setReportFileName("fundReport.jrxml");
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("title", "Fund Report Example");

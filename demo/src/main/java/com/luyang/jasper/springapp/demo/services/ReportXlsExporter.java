@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@Component
 public class ReportXlsExporter extends JRXlsxExporter {
 
     @Getter
