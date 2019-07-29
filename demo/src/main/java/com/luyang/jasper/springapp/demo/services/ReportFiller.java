@@ -54,8 +54,9 @@ public class ReportFiller {
                 jasperReport = JasperCompileManager.compileReport(reportStream);
                 JRSaver.saveObject(jasperReport, reportFileName.replace(".jrxml", ".jasper"));
                 jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource.getConnection());
+            }else {
+                Logger.getLogger(ReportFiller.class.getName()).log(Level.WARNING, "No Report template found with name " + reportFileName);
             }
-            Logger.getLogger(ReportFiller.class.getName()).log(Level.WARNING, "No Report template found with name " + reportFileName);
         } catch (JRException | SQLException ex) {
             Logger.getLogger(ReportFiller.class.getName()).log(Level.SEVERE, null, ex);
         }

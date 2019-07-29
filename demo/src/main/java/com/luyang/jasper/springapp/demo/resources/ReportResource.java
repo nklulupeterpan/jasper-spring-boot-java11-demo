@@ -70,7 +70,7 @@ public class ReportResource {
 
     private ReportFiller configFilter() {
         ReportFiller reportFiller = context.getBean(ReportFiller.class);
-        reportFiller.setReportFileName("fundReport1.jrxml");
+        reportFiller.setReportFileName("fundReport.jrxml");
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("title", "Fund Report Example");
 
