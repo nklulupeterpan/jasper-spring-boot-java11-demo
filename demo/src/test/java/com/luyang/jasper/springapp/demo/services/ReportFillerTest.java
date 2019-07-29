@@ -17,19 +17,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ReportFillerTest {
 
-
-
     @BeforeEach
     void setUp() {
-
-
-    }
-
-    @Test
-    void fillReport() {
-        ReportFiller reportFiller = new ReportFiller();
-        reportFiller.fillReport();
-        reportFiller.setReportFileName("fundReport.jrxml");
 
     }
 }

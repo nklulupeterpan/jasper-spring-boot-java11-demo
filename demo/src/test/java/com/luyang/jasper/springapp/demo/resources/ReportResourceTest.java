@@ -4,6 +4,7 @@ package com.luyang.jasper.springapp.demo.resources;
 import com.luyang.jasper.springapp.demo.services.ReportFiller;
 import com.luyang.jasper.springapp.demo.services.ReportPdfExporter;
 import com.luyang.jasper.springapp.demo.services.ReportXlsExporter;
+import net.sf.jasperreports.engine.JasperPrint;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +42,7 @@ class ReportResourceTest {
     @Test
     void generatePDFReportSuccess() throws Exception {
         given(reportPdfExporter.exportToPdf(anyString())).willReturn(true);
-
+        given(reportFiller.getJasperPrint()).willReturn(new JasperPrint());
         mockMvc.perform(get("/api/report/pdf"))
                 .andExpect(status().isOk())
         .andExpect(content().string("PDF Report is successfully generated "));
@@ -59,6 +60,7 @@ class ReportResourceTest {
     @Test
     void generateXLSReportSuccess() throws Exception {
         given(reportXlsExporter.exportToXlsx(anyString(),anyString())).willReturn(true);
+        given(reportFiller.getJasperPrint()).willReturn(new JasperPrint());
 
         mockMvc.perform(get("/api/report/xls"))
                 .andExpect(status().isOk())

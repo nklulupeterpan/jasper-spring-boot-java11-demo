@@ -36,8 +36,11 @@ public class ReportResource {
         LOGGER.info("Generating Fund PDF report.");
 
         ReportPdfExporter pdfExporter = context.getBean(ReportPdfExporter.class);
-        pdfExporter.setJasperPrint(configFilter().getJasperPrint());
-        boolean success = pdfExporter.exportToPdf("fundReport.pdf");
+        boolean success =false;
+        if(configFilter().getJasperPrint() != null) {
+            pdfExporter.setJasperPrint(configFilter().getJasperPrint());
+            success = pdfExporter.exportToPdf("fundReport.pdf");
+        }
         if (success) {
             return new ResponseEntity<>("PDF Report is successfully generated ", HttpStatus.OK);
         } else {
@@ -53,9 +56,11 @@ public class ReportResource {
         LOGGER.info("Generating Fund XLS report.");
 
         ReportXlsExporter xlsExporter = context.getBean(ReportXlsExporter.class);
-        xlsExporter.setJasperPrint( configFilter().getJasperPrint());
-        boolean success = xlsExporter.exportToXlsx("fundReport.xlsx", "Fund Data");
-
+        boolean success =false;
+        if(configFilter().getJasperPrint() != null) {
+            xlsExporter.setJasperPrint(configFilter().getJasperPrint());
+             success = xlsExporter.exportToXlsx("fundReport.xlsx", "Fund Data");
+        }
         if (success) {
             return new ResponseEntity<>("XLS Report is successfully generated ", HttpStatus.OK);
         } else {
@@ -65,7 +70,7 @@ public class ReportResource {
 
     private ReportFiller configFilter() {
         ReportFiller reportFiller = context.getBean(ReportFiller.class);
-        reportFiller.setReportFileName("fundReport.jrxml");
+        reportFiller.setReportFileName("fundReport1.jrxml");
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("title", "Fund Report Example");
 

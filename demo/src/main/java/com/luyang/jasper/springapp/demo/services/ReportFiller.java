@@ -50,9 +50,12 @@ public class ReportFiller {
     public void fillReport() {
         try {
             InputStream reportStream = getClass().getResourceAsStream("/".concat(reportFileName));
-            jasperReport = JasperCompileManager.compileReport(reportStream);
-            JRSaver.saveObject(jasperReport, reportFileName.replace(".jrxml", ".jasper"));
-            jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource.getConnection());
+            if(reportStream != null) {
+                jasperReport = JasperCompileManager.compileReport(reportStream);
+                JRSaver.saveObject(jasperReport, reportFileName.replace(".jrxml", ".jasper"));
+                jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource.getConnection());
+            }
+            Logger.getLogger(ReportFiller.class.getName()).log(Level.WARNING, "No Report template found with name " + reportFileName);
         } catch (JRException | SQLException ex) {
             Logger.getLogger(ReportFiller.class.getName()).log(Level.SEVERE, null, ex);
         }
